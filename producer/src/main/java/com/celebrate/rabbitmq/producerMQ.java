@@ -17,16 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 @RestController
 @ResponseBody
-//@RabbitListener(queues = "scelebrate")
+
 public class producerMQ {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @GetMapping("/msg")
-//    @RabbitHandler
-    public void send(){
-        rabbitTemplate.convertAndSend("scelebrate","你哈你好");
+
+    public String send(){
+        for (int i = 0; i < 100; i++) {
+            rabbitTemplate.convertAndSend("funout_celebrate","","你哈你好+"+i);
+        }
+        return  "订阅模式发送成功";
     }
 
 
